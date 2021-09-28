@@ -13,7 +13,7 @@ fn main() -> Result<(), CustomError>{
     //first arg is always path-to-executable:
     let executable_path = runtime_args.next().unwrap();
 
-    let execution_dir= trim_filename(&executable _path);
+    let execution_dir= trim_filename(&executable_path);
     //if argument provided it is considered to be absolute path to the target directory
     if args_length > 1 {process_all(runtime_args.last().unwrap())?;}
     else {
