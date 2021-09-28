@@ -2,13 +2,13 @@
 extern crate rayon;
 mod lib;
 use lib::*;
+use std::io::stdin;
 
 type CustomError = Box<dyn std::error::Error>;
 
 
 fn main() -> Result<(), CustomError>{
     let mut runtime_args = std::env::args();
-    println!("arguments length {:?}", &runtime_args.len());
     let args_length = runtime_args.len();
     //first arg is always path-to-executable:
     let execution_path = runtime_args.next().unwrap();
@@ -18,6 +18,12 @@ fn main() -> Result<(), CustomError>{
     if args_length > 1 {process_all(runtime_args.last().unwrap())?;}
     else {
         process_all(execution_dir)?;}
+    println!("обработка завершена, нажмите любую клавишу, чтобы закрыть окно");
+    let buf = &mut String::new();
+    loop {
+        let _input = stdin().read_line(buf);
+        if buf.len() > 0 {break}
+    }
     Ok(())
 }
 

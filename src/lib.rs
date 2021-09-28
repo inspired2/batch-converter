@@ -46,7 +46,7 @@ impl Image {
         path_buf.set_extension("jpeg").to_string();
         dyn_image.save_with_format( &path_buf, image::ImageFormat::Jpeg)?;
         std::fs::remove_file(self.path)?;
-
+        println!("found png: {}, converted to JPEG", &path_buf.to_str().expect("error parsing path_buf"));
         Ok(())
     }
 
@@ -54,7 +54,6 @@ impl Image {
 
 
 pub fn process_all(path: String) -> Result<(), CustomError> {
-    println!("{}", path);
     let files = collect_all_files(&path)?;
     let non_jpeg_images: Vec<Image> = files.into_iter().filter(|p| is_manageable(p)).map(Image::new).collect();
     non_jpeg_images.into_par_iter().for_each(move |img| { img.convert_to_jpeg().expect("error while converting image to jpeg");});
@@ -75,7 +74,6 @@ pub fn collect_all_files(dir_path: &str) -> Result<Vec<String>, CustomError> {
         }
         files.push(entry.path().to_string_lossy().to_string());
     }
-    println!("{:?}", files);
     Ok(files)
 }
 
