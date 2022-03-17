@@ -2,6 +2,7 @@
 name = "batch-converter"
 version = "0.0.1"
 authors = ["Alexander Chepurnov <inspired2@yandex.ru>"]
+license = "MIT"
 
 [lib]
 name = "converter"
